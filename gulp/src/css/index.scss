@@ -1,0 +1,12 @@
+@import "./block/_setting.scss";
+@import "./block/reset.scss";
+
+
+  .hello{
+    font-size:20px;
+    color: $blue;
+    text-align:center;
+
+   display: flex;
+  }
+

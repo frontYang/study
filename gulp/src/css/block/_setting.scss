@@ -1,0 +1,84 @@
+
+// default var
+$blue: #0777dd;
+$red: #ff4444;
+$gray: #999;
+$orange: #ff8800;
+$bdColor: #ddd;
+$bgColor: #f5f5f5;
+$chartBdColor: #f0f0f0;
+
+// mixin var
+$legacy-support-for-ie6: false;
+$legacy-support-for-ie: true;
+$inline-block-alignment: middle !default;
+$filter: true;
+
+// inline-block
+@mixin inline-block($alignment: $inline-block-alignment){
+  display: inline-block;
+  @if $alignment and $alignment != none {
+    vertical-align: $alignment;
+  }
+
+  @if $legacy-support-for-ie {
+    *vertical-align: auto;
+    zoom: 1;
+    *display: inline;
+  }
+}
+
+// clearfix
+@mixin clearfix {
+  @if $legacy-support-for-ie {
+    *zoom: 1;
+  }
+
+  &::before,
+  &::after{
+    content: "";
+    display: table;
+  }
+  &::after{
+    clear: both;
+    overflow: hidden;
+  }
+}
+
+%clearfix{
+  @include clearfix;
+}
+
+// opacity
+@mixin opacity($opacity:50) {
+  opacity: $opacity / 100;
+  @if $filter{
+    filter: alpha(opacity=$opacity);
+  }
+}
+
+// rgba
+@mixin bgcolor-alpha($bgColor: rgba(0, 0, 0, .5)) {
+  color: #fff;
+  @if $filter{
+    filter:progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#{ie-hex-str($bgColor)}', endColorstr='#{ie-hex-str($bgColor)}');
+  } @else {
+    background-color: #333;
+  }
+
+  background-color: #bgColor;
+}
+
+%bgcolor-alpha{
+  @include bgcolor-alpha;
+}
+
+// box-shadow
+@mixin box-shadow($x: $shadowX, $y: $shadowY, $shadowBlur: $shadowBlur, $shadowColor: $shadowColor) {
+  box-shadow: $x $y $shadowBlur $shadowColor;
+
+  @if $legacy-support-for-ie {
+    // filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=#{$x}, OffY=#{$y}, Color='#{$shadowColor}');
+    // -ms-filter: "progid:DXImageTransform.Microsoft.dropshadow(OffX=#{$x}, OffY=#{$y}, Color='#{$shadowColor}')";
+  }
+}
