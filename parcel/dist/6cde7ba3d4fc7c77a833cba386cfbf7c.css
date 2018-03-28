@@ -1,0 +1,17 @@
+body {
+  background: gray; }
+
+::-webkit-input-placeholder {
+  color: gray; }
+
+:-ms-input-placeholder {
+  color: gray; }
+
+::-ms-input-placeholder {
+  color: gray; }
+
+::placeholder {
+  color: gray; }
+
+._test_1o688_7 {
+  display: flex; }
