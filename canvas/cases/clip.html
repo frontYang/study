@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>polygon</title>
+</head>
+
+<body>
+    <canvas id="clip"></canvas>
+    <script>
+    function polygon(ctx, n, x, y, r, angle, counterclockwise) {
+        angle = angle || 0;
+        counterclockwise = counterclockwise || false;
+        ctx.moveTo(x + r * Math.sin(angle), // 从第一个顶点开始一条新的路径
+            y - r * Math.cos(angle)); // 使用三角形计算位置
+
+        let delta = 2 * Math.PI / n; // 两个顶点之间的夹角
+
+        for (let i = 1; i < n; i++) { // 循环剩余的每个顶点
+            angle += counterclockwise ? -delta : delta; // 调整角度
+            ctx.lineTo(x + r * Math.sin(angle), // 以下个顶点为端点添加线段
+                y - r * Math.cos(angle));
+        }
+
+        ctx.closePath(); // 将最后一个顶点和起点连接起来
+    }
+
+    let canvas = document.getElementById('clip');
+    let ctx = canvas.getContext('2d');
+    canvas.width = 1200;
+    canvas.height = 1200;
+
+   ctx.font = 'bold 60pt san-serif'; // 设置字体
+   ctx.lineWidth = 2; // 线段宽度
+   ctx.strokeStyle = '#000'; // 线段颜色
+
+   // 勾勒矩形轮廓和文本轮廓
+   ctx.strokeRect(175, 20, 50, 325);
+   ctx.strokeText = ('<canvas>', 15, 330);
+
+   // note：polygon方法见上面的示例
+   polygon(ctx, 3, 200, 225, 200); // 大三角形
+   polygon(ctx, 3, 200, 225, 100, 0, true); // 小三角形
+
+   ctx.clip();  // 将该路径定义成裁剪区域
+
+   ctx.lineWidth = 10; // 另外5个像素的线段被裁剪了
+   ctx.stroke();
+
+   ctx.fillStyle = '#aaa'; // 填充颜色
+   ctx.fillRect(175, 25, 50, 325); // 填充竖直的条带
+   ctx.fillStyle = '#888'; // 填充颜色
+   ctx.fillText('<canvas>', 15, 330); // 填充文本
+
+    </script>
+</body>
+
+</html>

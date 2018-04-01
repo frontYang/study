@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>drawImage</title>
+</head>
+
+<body>
+    <canvas id="drawImage"></canvas>
+    <script>
+
+    let canvas = document.getElementById('drawImage');
+    let ctx = canvas.getContext('2d');
+    canvas.width = 1200;
+    canvas.height = 1200;
+
+    ctx.moveTo(5, 5);
+    ctx.lineTo(45, 45);
+    ctx.lineWidth = 8;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+
+    ctx.translate(50, 100);
+    ctx.rotate(-45 * Math.PI / 180); // 让线段变得更直
+    ctx.scale(10, 10); // 将它放大到能够看到每个像素
+
+    ctx.drawImage(ctx.canvas,
+                  0, 0, 50, 50, // 源矩形区域 未变换
+                  0, 0, 50, 50) // 目标矩形区域 变换过
+
+
+    // 实现静态截图功能
+    var img = document.createElement('img');
+    img.src = canvas.toDataURL();
+    document.body.appendChild(img);
+    </script>
+</body>
+
+</html>

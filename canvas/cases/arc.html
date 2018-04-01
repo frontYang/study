@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>polygon</title>
+</head>
+
+<body>
+    <canvas id="arc"></canvas>
+    <script>
+
+    // 将角度转化成弧度制
+    function rads(x){
+        return Math.PI * x / 180;
+    }
+
+    let canvas = document.getElementById('arc');
+    let ctx = canvas.getContext('2d');
+    canvas.width = 1200;
+    canvas.height = 1200;
+
+    // 圆形
+    ctx.beginPath();
+    ctx.arc(75, 100, 50, 0, rads(360), false); // 圆心位于(75, 100), 半径为50, 从0°到360°顺时针旋转
+    ctx.closePath(); // 闭合
+
+    // 扇形
+    ctx.moveTo(200, 100);
+    ctx.arc(200, 100, 50, rads(-60), rads(0), false); // 顺时针
+    ctx.closePath(); // 闭合
+
+    ctx.moveTo(325, 100);
+    ctx.arc(325, 100, 50, rads(-60), rads(0), true); // 逆时针
+    ctx.closePath(); // 闭合
+
+    // 直线+圆弧
+    ctx.moveTo(450, 50); // 从上边的中点开始
+    ctx.arcTo(500, 50, 500, 150, 30); //添加部分上边和右上角
+    ctx.arcTo(500, 150, 400, 150, 30); // 添加右上角和右下角
+    ctx.arcTo(400, 150, 400, 50, 10); // 添加底边和左下角
+    ctx.arcTo(400, 50, 500, 550, 0); // 添加左边和左上角
+    ctx.closePath(); // 闭合
+
+    // 二次贝塞尔曲线
+    ctx.moveTo(75, 250)
+    ctx.quadraticCurveTo(100, 200, 175, 250); // 画一条以一直到点(175, 250)结束的曲线
+    ctx.fillRect(100 - 3, 200 - 3, 6, 6); // 标记控制点(100, 200)
+
+    // 三次贝塞尔曲线
+    ctx.moveTo(200, 250);
+    ctx.bezierCurveTo(220, 220, 280, 280, 300, 250); // 画一条以一直到点(300, 250)结束曲线
+    ctx.fillRect(220 - 3, 220 - 3, 6, 6); // 标记控制点
+    ctx.fillRect(280 - 3, 280 - 3, 6, 6);
+
+    ctx.fillStyle = '#aaa';
+    ctx.lineWidth = 5;
+    ctx.fill();
+    ctx.stroke();
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>drawImage</title>
+</head>
+
+<body>
+    <canvas id="drawImage"></canvas>
+    <script>
+
+    // 如果鼠标事件发生指定的CanvasRenderingContext2D对象的当前路径上则返回true
+    function hitpath(context, event){
+        // 从<canvas>对象中获取<canvas>元素
+        let canvas = context.canvas;
+
+        // 获取画布尺寸和位置
+        let bb = canvas.getBoundingClientRect();
+
+        // 将鼠标事件坐标通过转换和缩放变化成画布坐标
+        let x = (event.clientX - bb.left) * (canvas.width / bb.width);
+        let y = (event.clientY - bb.top) * (canvas.height / bb.height);
+
+        // 用这些变化后的坐标来调用isPointInPath()方法
+        return context.isPointInPath(x, y);
+    }
+
+    // 将角度转化成弧度制
+    function rads(x){
+        return Math.PI * x / 180;
+    }
+
+    let canvas = document.getElementById('drawImage');
+    let ctx = canvas.getContext('2d');
+    canvas.width = 1200;
+    canvas.height = 1200;
+
+    // 圆形
+    ctx.beginPath();
+    ctx.arc(75, 100, 50, 0, rads(360), false); // 圆心位于(75, 100), 半径为50, 从0°到360°顺时针旋转
+    ctx.closePath(); // 闭合
+
+    ctx.fillStyle = '#aaa';
+    ctx.lineWidth = 5;
+    ctx.fill();
+    ctx.stroke();
+
+
+    canvas.onclick = function(){
+        if(hitpath(this.getContext('2d'), event)){
+            alert('Hit');
+        }
+    }
+
+
+    </script>
+</body>
+
+</html>

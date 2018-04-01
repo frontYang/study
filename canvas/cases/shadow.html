@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>shadow</title>
+</head>
+
+<body>
+    <canvas id="shadow"></canvas>
+    <script>
+
+    let canvas = document.getElementById('shadow');
+    let ctx = canvas.getContext('2d');
+    canvas.width = 1200;
+    canvas.height = 1200;
+
+     ctx.shadowColor = 'rgba(100, 100, 100, .4)'; // 半透明灰色
+     ctx.shadowOffsetX = ctx.shadowOffsetY = 3; // 偏移阴影到右下角部分
+     ctx.shadowBlur = 5; // 柔化阴影的边缘
+
+     ctx.lineWidth = 10;
+     ctx.strokeStyle = 'blue';
+     ctx.strokeRect(100, 100, 300, 200); // 绘制一个巨型
+     ctx.font = 'Bold 36pt Helvetica';
+     ctx.fillText('Hello World', 115, 225); //绘制一些文本
+
+     ctx.shaowOffsetX = ctx.shadowOffsetY = 20;
+     ctx.shadowBlur = 10;
+     ctx.fillStyle = 'red';
+     ctx.fillRect(50, 25, 200, 65);
+    </script>
+</body>
+
+</html>
