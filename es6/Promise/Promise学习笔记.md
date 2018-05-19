@@ -21,6 +21,8 @@
   - 在多个回调之间难以建立联系
 ---
 ### Start
+
+#### init
 ```js
 new Promise(
   /* 执行器 executor */
@@ -37,78 +39,34 @@ new Promise(
   // 失败，做相应处理
 })
 ```
-
-
-- Promise是一个代理对象，它和原先要进行的操作并无关系
-- 它引入一个回调，避免更多的回调
-- 3个状态
-  - pending[待定]初始状态
-  - fulfilled[实现]操作成功
-  - rejected[被否决]操作失败
-- Promise状态发生改变，就会触发.then()里的响应函数处理后续步骤
-- Promise状态一经改变，不会再变
-- Promise实例一经创建，执行器立即执行
-  - new Promise(executer)实例声明 => executor执行器 => .then()下一步 => .then()下一步，每一个then都会返回一个新的Promise实例
+#### Details
+- Promise
+  - 是一个代理对象，它和原先要进行的操作并无关系
+  - 它引入一个回调，避免更多的回调
+  - 3个状态
+    - pending[待定]初始状态
+    - fulfilled[实现]操作成功
+    - rejected[被否决]操作失败
+  - Promise状态发生改变，就会触发.then()里的响应函数处理后续步骤
+  - Promise状态一经改变，不会再变
+  - Promise实例一经创建，执行器立即执行
+    - new Promise(executer)实例声明 => executor执行器 => .then()下一步 => .then()下一步，每一个then都会返回一个新的Promise实例
 
 - .then()
   - 接收两个函数作为参数，分别代表fulfilled和rejected
-  - 返回一个新的Promise实例，所以它可以链式调用
+  - 返回一个新的Promise实例，可以链式调用
   - 当前面的Promise状态改变时，.then()根据其最终状态选择特定的状态响应函数执行
   - 状态响应函数可以返回新的Promise，或其他值
-  - 如果返回新的Promise，那么下一级.then()会在新的Promise状态改变之后执行
-  - 如果返回其他任何值，则会立刻执行下一级.then()
-- .then()的嵌套
-  - 因为.then()返回的还是Promise实例，会等里面的.then()执行完，在执行外面的的。
-  - 将其展开，会更好的阅读
-
-- 下面四种Promise的区别
-```js
-/**
- * step1: doSomething
- * step2: doSomethingElse(undefined)
- * step3: finalHanler(resultOfDoSomethingElse)
- */
-doSomething()
-  .then(function(){
-    return doSomethingElse()
-  })
-  .then(finalHanler)
-
-/**
- * step1: doSomething
- * step2: doSomethingElse(undefined) 和 finalHanler(undefined)
- */
-doSomething()
-  .then(function(){
-    doSomethingElse()
-  })
-  .then(finalHanler)
-
-/**
- * step1: doSomething和doSomethingElse(undefined)
- * step2：finalHanler(resultOfDoSomething)
- */
-doSomething()
-  .then(doSomethingElse())
-  .then(finalHanler)
-
-
-/**
- * step1: doSomething
- * step2: doSomethingElse(resultOfDoSomething)
- * step3: finalHanler(resultOfDoSomethingElse)
- */
-doSomething()
-  .then(doSomethingElse)
-  .then(finalHanler)
-
-```
+    - 如果返回新的Promise，那么下一级.then()会在新的Promise状态改变之后执行
+    - 如果返回其他任何值，则会立刻执行下一级.then()
+  - 嵌套
+    - 因为.then()返回的还是Promise实例，会等里面的.then()执行完，在执行外面的的。
+    - 将其展开，会更好的阅读
 
 - 错误处理：Promise会自动捕获内部异常，并交给rejected响应函数处理
   - reject('错误信息).then(null, message => {})
   - throw new Error('错误信息).catch(message => {})
   - 用第二种方式，更加清晰好读，并且可以捕获前面的错误
-
 
 - .catch() + .then()：建议在所有队列最后都加上.catch(),以免漏掉错误处理造成意想不到的问题
 ```js
@@ -168,6 +126,51 @@ function queue(things) {
 queue(['da', 'dsf',...])
 
 ```
+
+- 下面四种Promise的区别
+```js
+/**
+ * step1: doSomething
+ * step2: doSomethingElse(undefined)
+ * step3: finalHanler(resultOfDoSomethingElse)
+ */
+doSomething()
+  .then(function(){
+    return doSomethingElse()
+  })
+  .then(finalHanler)
+
+/**
+ * step1: doSomething
+ * step2: doSomethingElse(undefined) 和 finalHanler(undefined)
+ */
+doSomething()
+  .then(function(){
+    doSomethingElse()
+  })
+  .then(finalHanler)
+
+/**
+ * step1: doSomething和doSomethingElse(undefined)
+ * step2：finalHanler(resultOfDoSomething)
+ */
+doSomething()
+  .then(doSomethingElse())
+  .then(finalHanler)
+
+
+/**
+ * step1: doSomething
+ * step2: doSomethingElse(resultOfDoSomething)
+ * step3: finalHanler(resultOfDoSomethingElse)
+ */
+doSomething()
+  .then(doSomethingElse)
+  .then(finalHanler)
+
+```
+
+
 ---
 ## Let's do it
 - [最简单的实例](./example/1/index.js)
