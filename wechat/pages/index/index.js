@@ -2,6 +2,26 @@
 //获取应用实例
 const app = getApp()
 
+/* 
+const api = require('../../utils/util.js')
+
+// 单个请求
+api.get('list').then(res => {
+  console.log(res)
+}).catch(e => {
+  console.log(e)
+})
+
+// 一个页面多个请求
+Promise.all([
+  api.get('list'),
+  api.get(`detail/${id}`)
+]).then(result => {
+  console.log(result)
+}).catch(e => {
+  console.log(e)
+}) */
+
 Page({
   data: {
     testData: {
