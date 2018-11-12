@@ -1,0 +1,7 @@
+<!--component/test/test.wxml-->
+<view class="wrapper component-class">
+  <view>{{componentData.a}}</view>
+  <view>{{componentData.b}}</view>
+  {{testData}}
+  <slot></slot>
+</view>

@@ -1,0 +1,6 @@
+<!--template/test/test.wxml-->
+<template name="test">
+  <view>
+    传入的数据：{{ aaa }}、{{ bbb }}
+  </view>
+</template>
