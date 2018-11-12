@@ -2,6 +2,9 @@
 //获取应用实例
 const app = getApp()
 
+// const api = require('../../utils/util.js')
+
+
 /* 
 const api = require('../../utils/util.js')
 

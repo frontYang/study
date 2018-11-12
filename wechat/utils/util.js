@@ -35,10 +35,11 @@ Promise.all([
   console.log(e)
 })
  */
-const baseUrl = "";
+const { config } = require('./config.js');
+
 const getUrl = (url) => {
   if(url.indexOf('.//' == -1)){
-    url = baseUrl + url
+    url = config.baseUrl + url
   }
   return url
 }
